@@ -4,6 +4,45 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useTranslation } from 'react-i18next';
 
+// Shop locations in Vietnam (mainland only)
+const shopLocations = [
+  {
+    id: 1,
+    name: "Tech Store Tuy Hoa",
+    address: "123 Hung Vuong Street, Tuy Hoa City, Phu Yen",
+    phone: "(0257) 123-4567",
+    position: [13.0955, 109.2969], // Tuy Hoa coordinates
+  },
+  {
+    id: 2,
+    name: "Tech Store Hanoi",
+    address: "456 Tran Hung Dao Street, Hoan Kiem, Hanoi",
+    phone: "(024) 234-5678",
+    position: [21.0285, 105.8542], // Hanoi coordinates
+  },
+  {
+    id: 3,
+    name: "Tech Store Ho Chi Minh",
+    address: "789 Nguyen Hue Boulevard, District 1, HCMC",
+    phone: "(028) 345-6789",
+    position: [10.8231, 106.6297], // HCMC coordinates
+  },
+  {
+    id: 4,
+    name: "Tech Store Da Nang",
+    address: "321 Bach Dang Street, Hai Chau, Da Nang",
+    phone: "(0236) 456-7890",
+    position: [16.0544, 108.2022], // Da Nang coordinates
+  },
+  {
+    id: 5,
+    name: "Tech Store Can Tho",
+    address: "654 Tran Phu Street, Ninh Kieu, Can Tho",
+    phone: "(0292) 567-8901",
+    position: [10.0452, 105.7469], // Can Tho coordinates
+  },
+];
+
 const HeroSearchSection = () => {
   const { t } = useTranslation();
 
