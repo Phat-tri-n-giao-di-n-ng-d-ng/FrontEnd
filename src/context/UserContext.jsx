@@ -1,26 +1,23 @@
 // Enhanced UserContext.js
-import React, { createContext, useState, useEffect } from "react";
-// import axiosInstance from "../custom/axios";
-import { loginContext as mockLogin, logoutContext as mockLogout } from "../services/MockAuthService";
-import { useTranslation } from 'react-i18next';
+import React, { createContext, useState, useEffect, useMemo, useCallback } from "react";
+import { loginContext as realLogin, logoutContext as realLogout } from "../services/LoginServices";
+import { getRoleFromToken, isTokenExpired } from "../utils/jwtUtils";
 
 const UserContext = createContext(null);
 
 const UserProvider = ({ children }) => {
-  const { t } = useTranslation();
-
   const [user, setUser] = useState(() => {
     const savedUser = localStorage.getItem("user");
     return savedUser ? JSON.parse(savedUser) : null;
   });
-  
+
   const [loading, setLoading] = useState(true);
 
-  // Login function - Using Mock Data
-  const login = async (credentials) => {
+  // Login function - Using Real Authentication
+  const login = useCallback(async (credentials) => {
     try {
-      const user = await mockLogin(credentials);
-      
+      const user = await realLogin(credentials);
+
       if (user) {
         localStorage.setItem("user", JSON.stringify(user));
         setUser(user);
@@ -35,42 +32,42 @@ const UserProvider = ({ children }) => {
         throw new Error("Đăng nhập thất bại, vui lòng thử lại sau");
       }
     }
-  };
-  
-  // Get user role
-  const getUserRole = () => {
+  }, []);
+
+  // Memoized user role - only recalculate when user changes
+  const userRole = useMemo(() => {
     if (!user) return null;
-    
-    console.log("User object in getUserRole:", user);
-    
-    // Try different properties that might contain the role
-    let roleValue = user?.position || user?.role || user?.userRole;
-    console.log("Raw role value:", roleValue);
-    
-    // Convert to string and lowercase for consistent comparison
-    if (roleValue) {
-      roleValue = String(roleValue).toLowerCase();
-      
-      // Map Vietnamese roles to standardized English roles
-      if (roleValue === "quản lý cửa hàng" || roleValue.includes("quản lý")) {
-        return "manager";
-      } else if (roleValue.includes("nhân viên")) {
-        return "employee";
+
+    // First try to get role from user object (which comes from JWT)
+    let roleValue = user?.role;
+
+    // If not in user object, try to get from token
+    if (!roleValue) {
+      const token = localStorage.getItem('authToken');
+      if (token) {
+        roleValue = getRoleFromToken(token);
       }
     }
-    
-    // If no specific employee role is found, assume customer
-    return "customer";
-  };
 
-  const isManager = () => getUserRole() === "manager";
-  const isEmployee = () => getUserRole() === "employee";
-  const isCustomer = () => getUserRole() === "customer";
-  
-  // Logout function - Using Mock Data
-  const logout = async () => {
+    // Return role in lowercase for consistent comparison
+    return roleValue ? String(roleValue).toLowerCase() : null;
+  }, [user]);
+
+  // Get user role function - returns cached value
+  const getUserRole = useCallback(() => {
+    return userRole;
+  }, [userRole]);
+
+  // Memoized role checks - only recalculate when role changes
+  const isAdmin = useMemo(() => userRole === "admin", [userRole]);
+  const isCustomerService = useMemo(() => userRole === "customer_service", [userRole]);
+  const isCustomer = useMemo(() => userRole === "customer", [userRole]);
+  const isGuest = useMemo(() => userRole === "guest", [userRole]);
+
+  // Logout function - Using Real Authentication
+  const logout = useCallback(async () => {
     try {
-      await mockLogout();
+      await realLogout();
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
@@ -78,28 +75,65 @@ const UserProvider = ({ children }) => {
       setUser(null);
       localStorage.removeItem('user');
       localStorage.removeItem('authToken');
-    }
-  };
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem("guestCart");
 
-  // Check authentication on mount - Using Mock Data
+      // Redirect to login page for security (clear all state)
+      window.location.href = '/login';
+    }
+  }, []);
+
+  // Check authentication on mount - Using Real Authentication
   useEffect(() => {
     const checkAuth = async () => {
       setLoading(true);
       try {
         const token = localStorage.getItem("authToken");
         const savedUser = localStorage.getItem("user");
-        
-        if (token && savedUser) {
-          // Parse saved user from localStorage
-          const parsedUser = JSON.parse(savedUser);
-          setUser(parsedUser);
+
+        if (token) {
+          // Special-case for OAuth2 flow using local marker token 'google'
+          if (token === 'google') {
+            if (savedUser) {
+              const parsedUser = JSON.parse(savedUser);
+              setUser(parsedUser);
+            } else {
+              setUser(null);
+            }
+          } else if (isTokenExpired(token)) {
+            // Token is expired, clearing auth data
+            setUser(null);
+            localStorage.removeItem("authToken");
+            localStorage.removeItem("refreshToken");
+            localStorage.removeItem("user");
+          } else if (savedUser) {
+            // Parse saved user from localStorage
+            const parsedUser = JSON.parse(savedUser);
+
+            // Verify role from token matches saved user
+            const roleFromToken = getRoleFromToken(token);
+            if (roleFromToken && parsedUser.role !== roleFromToken) {
+              // Role mismatch, updating user role from token
+              parsedUser.role = roleFromToken;
+              localStorage.setItem("user", JSON.stringify(parsedUser));
+            }
+
+            setUser(parsedUser);
+          } else {
+            // Token exists but no saved user, clearing token
+            setUser(null);
+            localStorage.removeItem("authToken");
+            localStorage.removeItem("refreshToken");
+          }
         } else {
+          // No token found
           setUser(null);
         }
       } catch (error) {
         console.error("Auto-login error:", error);
         setUser(null);
         localStorage.removeItem("authToken");
+        localStorage.removeItem("refreshToken");
         localStorage.removeItem("user");
       } finally {
         setLoading(false);
@@ -109,24 +143,28 @@ const UserProvider = ({ children }) => {
   }, []);
 
   // Update user function
-  const updateUser = (updatedUserData) => {
+  const updateUser = useCallback((updatedUserData) => {
     const updatedUser = { ...user, ...updatedUserData };
     setUser(updatedUser);
     localStorage.setItem("user", JSON.stringify(updatedUser));
-  };
+  }, [user]);
+
+  // Memoize context value to prevent unnecessary re-renders
+  const contextValue = useMemo(() => ({
+    user,
+    login,
+    logout,
+    loading,
+    getUserRole,
+    isAdmin,
+    isCustomerService,
+    isCustomer,
+    isGuest,
+    updateUser
+  }), [user, loading, login, logout, getUserRole, isAdmin, isCustomerService, isCustomer, isGuest, updateUser]);
 
   return (
-    <UserContext.Provider value={{ 
-      user, 
-      login, 
-      logout, 
-      loading,
-      getUserRole,
-      isManager,
-      isEmployee,
-      isCustomer,
-      updateUser
-    }}>
+    <UserContext.Provider value={contextValue}>
       {children}
     </UserContext.Provider>
   );
