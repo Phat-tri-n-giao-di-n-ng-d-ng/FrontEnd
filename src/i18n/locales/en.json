@@ -779,6 +779,7 @@
   },
   "brand": {
     "brands": "Brands",
+    "all_brands": "All Brands",
     "handlebrandselectnull_classnamewfull_border_bordergray400": "Name",
     "top_brands": "Top Brands",
     "unknown": "🔍",

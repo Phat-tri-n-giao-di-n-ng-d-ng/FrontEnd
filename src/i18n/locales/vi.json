@@ -782,6 +782,7 @@
   },
   "brand": {
     "brands": "Thương Hiệu",
+    "all_brands": "Tất Cả Thương Hiệu",
     "handlebrandselectnull_classnamewfull_border_bordergray400": "handleBrandSelect(null)}\r\n        className=\"w-full border border-gray-400 text-gray-500 font-medium py-2 mb-6 rounded-full hover:bg-gray-200 transition\"\r\n      >\r\n        All Brands",
     "top_brands": "Thương Hiệu Hàng Đầu",
     "unknown": "🔍",

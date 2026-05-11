@@ -777,6 +777,7 @@
   },
   "brand": {
     "brands": "ブランド",
+    "all_brands": "すべてのブランド",
     "handlebrandselectnull_classnamewfull_border_bordergray400": "名前",
     "top_brands": "トップブランド",
     "unknown": "🔍",

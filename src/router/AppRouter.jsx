@@ -30,11 +30,11 @@ import Catalog from "../pages/Laptops/Catalog";
 // import FAQ from "../pages/faq/FAQ";
 // import ShoppingCartItem from "../pages/ShoppingCard/ShoppingCardItem";
 // import ShoppingCard_CheckOut from "../pages/ShoppingCard/ShoppingCard_CheckOut";
-// import ProductDetail from "../components/product/ProductDetail";
-// import ProductSpeccs from "../components/product/ProductSpecss";
+import ProductDetail from "../components/product/ProductDetail";
+import ProductSpeccs from "../components/product/ProductSpecss";
 // import Admin from "../pages/AdminLayout/AdminLayout";
-// import ProductAbout from "../components/product/ProductAbout";
-// import Product from "../components/product/Product";
+import ProductAbout from "../components/product/ProductAbout";
+import Product from "../components/product/Product";
 import ScrollToTop from "../components/option/ScrollToTop";
 // import VIPCalendar from "../pages/Calendar/VIPCalendar";
 // import ThankYouPage from "../pages/ShoppingCard/ThankForShopping";
@@ -83,7 +83,7 @@ const AppRouter = () => {
       <ScrollToTop />
       <Routes>
         {/* Public routes */}
-        {/* <Route path="/login" element={<LoginWave />} /> */}
+        <Route path="/login" element={<LoginWave />} />
 
         <Route
           path="/admin"
@@ -170,12 +170,12 @@ const AppRouter = () => {
             }
           /> */}
           {/* Product routes */}
-          {/* <Route path="/product/:id" element={<Product />}>
+          <Route path="/product/:id" element={<Product />}>
             <Route path="productAbout" element={<ProductAbout />} />
             <Route path="productDetail" element={<ProductDetail />} />
             <Route path="productSpeccs" element={<ProductSpeccs />} />
             <Route index element={<ProductAbout />} />
-          </Route> */}
+          </Route>
           {/* Catalog route */}
           <Route path="/products" element={<Catalog />} />
           
