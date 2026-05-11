@@ -18,7 +18,7 @@ import logo3 from "../../assets/images/logo/logo_razer.svg";
 import logo4 from "../../assets/images/logo/logo_thermaltake.svg";
 import logo5 from "../../assets/images/logo/logo_adata.svg";
 import logo6 from "../../assets/images/logo/logo_hp.svg";
-import logo7 from "../../assets/images/logo/logo_gigabytes.svg";
+import logo7 from "../../assets/images/logo/logo_msi.svg";
 import CardNews from "../info/CardNews";
 import TestimonialSlider from "../info/TestimonialSlider";
 import HeroSearchSection from "../HeroSearchSection";
@@ -205,37 +205,7 @@ function Content() {
 
       {/* Banner */}
       <Slideshow /> {/* Assuming you have a Slideshow component */}
-      {/* Minigame CTA - Simple Design */}
-      <div className="max-w-screen-xl mx-auto mt-8 mb-8">
-        <div className="flex items-center justify-center">
-          {(() => {
-            const user = JSON.parse(localStorage.getItem("user") || "{}");
-            const hasPlays = user?.numberOfPlaysAllowed > 0 && user?.numberOfGamesPlayed < user?.numberOfPlaysAllowed;
-            
-            return hasPlays ? (
-              <a
-                href="/minigame"
-                className="inline-flex items-center justify-center px-8 py-3 font-semibold text-white bg-gradient-to-r from-black via-gray-900 to-purple-950 rounded-lg hover:opacity-90 transition-opacity duration-200 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              >
-                <span className="mr-2">🎮</span>
-                {t('minigame.playButton')}
-              </a>
-            ) : (
-              <div className="inline-flex items-center justify-center px-8 py-3 font-semibold text-white bg-gradient-to-r from-gray-400 via-gray-500 to-gray-600 rounded-lg opacity-70 cursor-not-allowed">
-                <span className="mr-2">❌</span>
-                {t('minigame.noPlaysLeft')}
-              </div>
-            );
-          })()}
-        </div>
-        
-        {/* Subtitle */}
-        <div className="text-center mt-3">
-          <p className="text-gray-600 text-sm">
-            {t('minigame.description')}
-          </p>
-        </div>
-      </div>
+
       {/* New product */}
       <div className="py-6 max-w-screen-xl mx-auto">
         <h2 className="text-xl font-bold mb-4">{t('common.new_products')}</h2>
@@ -401,19 +371,7 @@ function Content() {
         </div>
       </div>
       {/* Logo group */}
-      <div className="w-full max-w-screen-xl mx-auto mt-4 rounded-md overflow-hidden">
-        <div className="flex gap-4 max-w-screen-xl mx-auto py-6">
-          <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            <img src={logo1} alt="" className="h-40 object-contain" />
-            <img src={logo2} alt="" className="h-40 object-contain" />
-            <img src={logo3} alt="" className="h-40 object-contain" />
-            <img src={logo4} alt="" className="h-40 object-contain" />
-            <img src={logo5} alt="" className="h-40 object-contain" />
-            <img src={logo6} alt="" className="h-40 object-contain" />
-            <img src={logo7} alt="" className="h-40 object-contain" />
-          </div>
-        </div>
-      </div>
+
       {/* Follow us on Instagram for News, Offers & More */}
       <div className="w-full max-w-screen-xl mx-auto mt-4 rounded-md overflow-hidden">
         <h2 className="text-xl font-bold mb-4">
