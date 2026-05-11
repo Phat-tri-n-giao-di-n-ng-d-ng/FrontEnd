@@ -1,7 +1,7 @@
 import Header from "../../components/Header"
 import Footer from "../../components/Footer"
 import { Outlet } from "react-router-dom";
-import ChatWidget from "../../components/ChatWidget";
+// import ChatWidget from "../../components/ChatWidget";
 import { useTranslation } from 'react-i18next';
 
 function Layout() {
@@ -15,7 +15,7 @@ function Layout() {
                 <Outlet></Outlet>
             </main>
             <Footer />
-            <ChatWidget />
+            {/* <ChatWidget /> */}
         </>
     )
 }

@@ -79,15 +79,32 @@
 
 .infoIcon {
   position: absolute;
-  top: 1.93rem;
+  top: 1.95rem;
   right: 1.3rem;
-  font-size: 2rem;
-  color: #ffffff;
-  display: inline-flex;
-  padding: 0.25rem;
+  width: 24px;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
   cursor: pointer;
   transition: opacity 0.3s;
-  text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  transform: translate(-12px, 15px);
+}
+
+.infoLetter {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: "Arial", sans-serif;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  display: block;
+  transform: translate(0px, 0px);
+  transform: translate(0px, 0px)
 }
 
 .infoImg {

@@ -9,7 +9,7 @@ import { UserContext } from "../context/UserContext";
 import { fetchProducts } from "../utils/redux/fetchProductsSlice";
 import { FaChevronDown } from "react-icons/fa";
 import CartDropdown from "./CartDropdown";
-import LanguageSwitcher from "./LanguageSwitcher";
+// import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslation } from 'react-i18next';
 const Header = () => {
   const { t } = useTranslation();
@@ -596,7 +596,7 @@ const Header = () => {
           {/* RIGHT: Icons - Modern 2025 Ecommerce */}
           <div className="relative z-10 flex items-center justify-end gap-5">
             {/* Language Switcher */}
-            <LanguageSwitcher />
+            {/* <LanguageSwitcher /> */}
 
             {/* Shopping Cart - Enhanced */}
             <div 

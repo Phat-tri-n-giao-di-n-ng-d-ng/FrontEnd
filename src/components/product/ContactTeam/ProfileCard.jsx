@@ -18,11 +18,11 @@ const ProfileCard = ({ memberData }) => {
       </div>
 
       <h3 className="cardName">{name}</h3>
-      <span className="cardProfession">{t('product.full_stack_developer')}</span>
+      <span className="cardProfession">{"Full stack developers"}</span>
 
       <div className="info">
         <div className="infoIcon">
-          <FaInfoCircle />
+          <span className="infoLetter">i</span>
         </div>
 
         <div className="infoBorder">
