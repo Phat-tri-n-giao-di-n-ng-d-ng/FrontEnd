@@ -12,8 +12,8 @@ import ProtectedRoute from "../services/ProtectedRoute";
 // Pages and Components
 import Layout from "../pages/Layout/Layout";
 import Content from "../components/Content/Content";
-// import Contact from "../components/Contact";
-// import About from "../components/About";
+import Contact from "../components/Contact";
+import About from "../components/About";
 // import LoginWave from "../pages/login/LoginWave";
 // import Login from "../pages/login/Login";
 // import Profile from "../pages/Profile/Profile";
