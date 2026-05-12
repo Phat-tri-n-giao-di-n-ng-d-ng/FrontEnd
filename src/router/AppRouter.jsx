@@ -31,7 +31,7 @@ import NetWorking from "../pages/Networking_devices/Networking_devices";
 import Printer_Scanner from "../pages/Printer_scanner/Printer_scanner";
 import PC_Part from "../pages/Pc_parts/PC_Part";
 import All_Product from "../pages/All_Products/All_Products";
-import Repair from "../pages/Repair/Repair";
+// import Repair from "../pages/Repair/Repair";
 import Our_Deal from "../pages/Our_Deal/Our_Deal";
 import Card from "../pages/Card/Card";
 import Catalog from "../pages/Laptops/Catalog";
@@ -125,7 +125,6 @@ const AppRouter = () => {
           <Route path="printer_scanner" element={<Printer_Scanner />} />
           <Route path="pc_parts" element={<PC_Part />} />
           <Route path="all_products" element={<All_Product />} />
-          <Route path="repair" element={<Repair />} />
           <Route path="our_deal" element={<Our_Deal />} />
           <Route path="thank_you_shopping" element={<ThankYouPage />} />
 

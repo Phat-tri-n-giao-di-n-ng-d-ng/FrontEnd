@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { UserContext } from "../context/UserContext";
 import { FaChevronDown } from "react-icons/fa";
 import CartDropdown from "./CartDropdown";
-// import LanguageSwitcher from "./LanguageSwitcher";
+import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslation } from "react-i18next";
 import { loadCartItems } from "../utils/redux/cartSlice";
 import notify from "../utils/notify";
@@ -617,7 +617,7 @@ const Header = () => {
           {/* RIGHT: Icons - Simplified */}
           <div className="flex items-center justify-end gap-3">
             {/* Language Switcher */}
-            {/* <LanguageSwitcher /> */}
+            <LanguageSwitcher />
 
             {/* Shopping Cart - Simplified */}
             <div
