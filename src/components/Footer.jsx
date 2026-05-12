@@ -1,24 +1,47 @@
-import React from "react";
-
-import logo_facebook from "../assets/images/logo/logo_facebook_footer.svg";
-import logo_instagram from "../assets/images/logo/logo_insta_footer.svg";
-
-import logo1 from "../assets/images/logo/logo_paypal_footer.svg";
-import logo2 from "../assets/images/logo/logo_visa_footer.svg";
-import logo3 from "../assets/images/logo/logo_maestro_footer.svg";
-import logo4 from "../assets/images/logo/logo_discover_footer.svg";
-import logo5 from "../assets/images/logo/logo_american-express_footer.svg";
+import React, { useState } from "react";
+import axios from "axios";
 import { useTranslation } from 'react-i18next';
+import { FaFacebook, FaInstagram } from "react-icons/fa";
+import { SiPaypal, SiVisa, SiMastercard, SiDiscover } from "react-icons/si";
+import { FaCcAmex } from "react-icons/fa";
 
 const Footer = () => {
   const { t } = useTranslation();
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleNewsletterSubmit = async (e) => {
+    e.preventDefault();
+    if (!email) {
+      setMessage("Vui lòng nhập email");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      // Gửi email đăng ký newsletter
+      await axios.post('/api/newsletter/subscribe', {
+        email: email,
+        source: 'footer'
+      });
+      
+      setMessage("Đăng ký thành công! Bạn sẽ nhận được thông tin sản phẩm mới.");
+      setEmail("");
+    } catch (error) {
+      setMessage("Có lỗi xảy ra. Vui lòng thử lại sau.");
+      console.error('Newsletter subscription error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <footer className="bg-gradient-to-b from-black via-gray-900 to-purple-950 text-gray-300 py-12 px-4 border-t-2 border-purple-800">
       <div className="max-w-7xl mx-auto">
         {/* Newsletter Section */}
-        <div className="mb-12 text-center flex justify-between items-center">
-          <div className="text-start">
+        <div className="mb-12 text-center">
+          <div className="mb-6">
             <h3 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 mb-4">
               {t('footer.newsletter.title')}
             </h3>
@@ -26,16 +49,28 @@ const Footer = () => {
               {t('footer.newsletter.subtitle')}
             </p>
           </div>
-          <div className="flex justify-center gap-4 h-12">
+          <form onSubmit={handleNewsletterSubmit} className="flex justify-center gap-4 h-12">
             <input
               type="email"
               placeholder={t('footer.newsletter.placeholder')}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="px-4 py-2 w-80 rounded-lg focus:outline-none text-white bg-gray-800 border-2 border-purple-700 focus:border-purple-500 focus:ring-2 focus:ring-purple-500 transition-all placeholder-gray-400"
+              required
             />
-            <button className="bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 px-6 py-2 rounded-lg text-white font-medium cursor-pointer transition-all duration-300 shadow-lg hover:shadow-purple-500/50 transform hover:scale-105">
-              {t('footer.newsletter.subscribe')}
+            <button 
+              type="submit"
+              disabled={isSubmitting}
+              className="bg-gradient-to-r from-purple-600 to-purple-800 hover:from-purple-700 hover:to-purple-900 px-6 py-2 rounded-lg text-white font-medium cursor-pointer transition-all duration-300 shadow-lg hover:shadow-purple-500/50 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? "Đang gửi..." : t('footer.newsletter.subscribe')}
             </button>
-          </div>
+          </form>
+          {message && (
+            <p className={`mt-4 text-sm ${message.includes('thành công') ? 'text-green-400' : 'text-red-400'}`}>
+              {message}
+            </p>
+          )}
         </div>
 
         {/* Main Footer Content */}
@@ -258,17 +293,59 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             {/* Social Icons */}
             <div className="flex gap-4">
-              <img src={logo_facebook} alt={t('remaining.facebook')} className="h-6 hover:scale-110 transition-transform cursor-pointer opacity-80 hover:opacity-100" />
-              <img src={logo_instagram} alt={t('remaining.instagram')} className="h-6 hover:scale-110 transition-transform cursor-pointer opacity-80 hover:opacity-100" />
+              <a 
+                href="#" 
+                className="bg-purple-700 hover:bg-purple-600 p-2 rounded-lg transition-all duration-300 flex items-center justify-center text-white text-xl"
+                aria-label={t('remaining.facebook')}
+              >
+                <FaFacebook />
+              </a>
+              <a 
+                href="#" 
+                className="bg-purple-700 hover:bg-purple-600 p-2 rounded-lg transition-all duration-300 flex items-center justify-center text-white text-xl"
+                aria-label={t('remaining.instagram')}
+              >
+                <FaInstagram />
+              </a>
             </div>
 
             {/* Payment Icons */}
-            <div className="flex gap-4">
-              <img src={logo1} alt={t('remaining.paypal')} className="h-6 hover:scale-110 transition-transform cursor-pointer opacity-80 hover:opacity-100" />
-              <img src={logo2} alt={t('remaining.visa')} className="h-6 hover:scale-110 transition-transform cursor-pointer opacity-80 hover:opacity-100" />
-              <img src={logo3} alt={t('remaining.maestro')} className="h-6 hover:scale-110 transition-transform cursor-pointer opacity-80 hover:opacity-100" />
-              <img src={logo4} alt={t('remaining.discover')} className="h-6 hover:scale-110 transition-transform cursor-pointer opacity-80 hover:opacity-100" />
-              <img src={logo5} alt={t('remaining.american_express')} className="h-6 hover:scale-110 transition-transform cursor-pointer opacity-80 hover:opacity-100" />
+            <div className="flex gap-4 flex-wrap justify-center">
+              <a 
+                href="#" 
+                className="bg-purple-700 hover:bg-purple-600 p-2 rounded-lg transition-all duration-300 flex items-center justify-center text-white text-xl"
+                aria-label={t('remaining.paypal')}
+              >
+                <SiPaypal />
+              </a>
+              <a 
+                href="#" 
+                className="bg-purple-700 hover:bg-purple-600 p-2 rounded-lg transition-all duration-300 flex items-center justify-center text-white text-xl"
+                aria-label={t('remaining.visa')}
+              >
+                <SiVisa />
+              </a>
+              <a 
+                href="#" 
+                className="bg-purple-700 hover:bg-purple-600 p-2 rounded-lg transition-all duration-300 flex items-center justify-center text-white text-xl"
+                aria-label={t('remaining.maestro')}
+              >
+                <SiMastercard />
+              </a>
+              <a 
+                href="#" 
+                className="bg-purple-700 hover:bg-purple-600 p-2 rounded-lg transition-all duration-300 flex items-center justify-center text-white text-xl"
+                aria-label={t('remaining.discover')}
+              >
+                <SiDiscover />
+              </a>
+              <a 
+                href="#" 
+                className="bg-purple-700 hover:bg-purple-600 p-2 rounded-lg transition-all duration-300 flex items-center justify-center text-white text-xl"
+                aria-label={t('remaining.american_express')}
+              >
+                <FaCcAmex />
+              </a>
             </div>
 
             {/* Copyright Text */}
@@ -284,6 +361,3 @@ const Footer = () => {
 
 export default Footer;
 
-// Updated: 2025-10-12T16:06:44.847Z
-
-// Updated: 2025-10-12T16:08:44.838Z

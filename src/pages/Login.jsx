@@ -7,9 +7,9 @@ import {
   faLinkedinIn,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axiosInstance from "../../custom/axios";
-import { UserContext } from "../../context/UserContext";
-import Header from "../../components/Header";
+import axiosInstance from "../custom/axios";
+import { UserContext } from "../context/UserContext";
+import Header from "../components/Header";
 import { useTranslation } from 'react-i18next';
 
 const App = () => {
