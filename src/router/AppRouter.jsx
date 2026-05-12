@@ -70,7 +70,6 @@ import CustomerServiceDashboard from "../pages/CustomerService/CustomerServiceDa
 import ToastDemo from "../pages/ToastDemo/ToastDemo";
 import I18nDemo from "../pages/I18nDemo/I18nDemo";
 import UserProfile from "../pages/UserProfile/UserProfile";
-import FlappyBird from "../components/minigame/flappy-bord";
 import Favorites from "../pages/Favorites/Favorites";
 import NotFound from "../pages/NotFound/NotFound";
 
@@ -116,16 +115,6 @@ const AppRouter = () => {
         {/* Customer/public routes */}
         <Route path="/" element={<Layout />}>
           <Route index element={<Content />} />
-
-          {/* Minigame route - Requires authentication */}
-          <Route
-            path="minigame"
-            element={
-              <ProtectedRoute requireAuth={true} requiredRoles={[]}>
-                <FlappyBird />
-              </ProtectedRoute>
-            }
-          />
           <Route path="contact" element={<Contact />} />
           <Route path="about" element={<About />} />
           <Route path="laptops" element={<Laptop />} />
