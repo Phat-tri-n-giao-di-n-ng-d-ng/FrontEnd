@@ -14,9 +14,17 @@ import { getRoleFromToken, isTokenExpired } from "../utils/jwtUtils";
 
 const UserContext = createContext(null);
 const getStorableUser = (userData) => {
-  if (!userData || typeof userData !== "object") return userData;
-  const { phoneNumber, gender, ...safeUser } = userData;
-  return safeUser;
+  if (!userData || typeof userData !== "object") return null;
+  return {
+    id: userData.id ?? userData.userId ?? null,
+    userId: userData.userId ?? userData.id ?? null,
+    fullName: userData.fullName ?? userData.name ?? "",
+    username: userData.username ?? "",
+    email: userData.email ?? "",
+    avatar: userData.avatar ?? "",
+    role: userData.role ?? null,
+    loginProvider: userData.loginProvider ?? null,
+  };
 };
 
 const UserProvider = ({ children }) => {
