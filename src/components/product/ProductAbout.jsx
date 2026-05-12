@@ -517,10 +517,10 @@ const handleSubmitReview = async () => {
                 <span>{t("product.add_to_cart")}</span>
               </button>
               
-              <button className="w-full flex items-center justify-center space-x-2 bg-yellow-400 text-gray-900 text-base font-semibold py-3 rounded-lg hover:bg-yellow-500 transition-all duration-200 shadow-sm hover:shadow-md">
+              {/* <button className="w-full flex items-center justify-center space-x-2 bg-yellow-400 text-gray-900 text-base font-semibold py-3 rounded-lg hover:bg-yellow-500 transition-all duration-200 shadow-sm hover:shadow-md">
                 <FaPaypal className="w-5 h-5" />
                 <span>{t("product.pay_with_paypal")}</span>
-              </button>
+              </button> */}
             </div>
 
             {/* Service & Support - Cleaner */}

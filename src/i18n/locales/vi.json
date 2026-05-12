@@ -65,6 +65,10 @@
     "manageAccount": "Quản lý tài khoản của bạn",
     "n_a": "N/A"
   },
+  "admin" : {
+    "discount_tab_all" : "Tất Cả",
+    "discount_tab_active" : "Đang Áp Dụng"
+  },
   "product": {
     "addToCart": "Thêm Vào Giỏ",
     "buyNow": "Mua Ngay",
@@ -341,6 +345,7 @@
     "copyright": "Bản quyền © 2020 DeepPty, LLC"
   },
   "common": {
+    "see_all_products" : "Xem Tất Cả Sản Phẩm",
     "47": "4.7",
     "loading": "Đang tải...",
     "error": "Đã xảy ra lỗi",
@@ -1045,7 +1050,34 @@
     "rfm_score_label": "Điểm RFM",
     "orders_label": "Số đơn hàng",
     "revenue_vnd_label": "Doanh thu (VNĐ)",
-   
+    "discount_tab_active" :"Đang Áp Dụng",
+    "discount_tab_all" :"Tất Cả",
+    "discount_tab_expired" :"Đã Hết Hạn",
+    "discount_tab_upcoming" :"Sắp Diễn Ra",
+    "discount_tab_best" : "Giảm Giá Hot",
+    "deativate_discount": "Bạn có chắc muốn hủy kích hoạt mã giảm giá này không?",
+    "add_discount": "Thêm Mã Giảm Giá",
+    "discount_advanced_filter" : "Bộ Lọc Nâng Cao",
+    "discount_status_all" : "Tất Cả",
+    "discount_status_active" : "Đang Áp Dụng",
+    "discount_status_inactive" : "Đã Hết Hạn",
+    "discount_total" : "Tổng Số Mã Giảm Giá",
+    "discount_active" : "Đang Áp Dụng",
+    "discount_expired" : "Đã Hết Hạn",
+    "discount_avg" : "Giảm Giá Trung Bình",
+    "discount_name_col" : "Tên Mã Giảm Giá",
+    "discount_type_col" : "Loại Giảm Giá",
+    "discount_rate_col" : "Tỷ Lệ Giảm Giá",
+    "discount_product_col" : "Sản Phẩm Áp Dụng",
+    "discount_time_col" : "Thời Gian Áp Dụng",
+    "discount_status_col" : "Trạng Thái",
+    "actions" :"Thao tác",
+    "edit" : "Chỉnh Sửa",
+    "send_mail" : "Gửi Email",
+    
+
+
+
     "from": "Từ",
     "to": "Đến",
     "aov_label": "AOV",
@@ -1785,7 +1817,9 @@
       "discount_percentage": "Giảm giá",
       "discount_fixed": "Giảm giá cố định",
       "order_note": "Ghi Chú Đơn Hàng",
-      "order_note_placeholder": "Nhập ghi chú (tùy chọn)..."
+      "order_note_placeholder": "Nhập ghi chú (tùy chọn)...",
+      "apply" : "Áp Dụng",
+      "enter_discount_code": "Nhập mã giảm giá"
     },
     "payment_methods": {
       "apple_pay": "Apple Pay",

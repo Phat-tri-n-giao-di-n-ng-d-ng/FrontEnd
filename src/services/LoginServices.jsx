@@ -306,7 +306,7 @@ export const registerUser = async (userData) => {
       confirmPassword: userData.confirmPassword
     };
 
-    const response = await axiosInstance.post('/users', registerPayload);
+    const response = await axiosInstance.post('/users/register', registerPayload);
 
     console.log('=== REGISTER RESPONSE ===');
     console.log('Status:', response.status);
