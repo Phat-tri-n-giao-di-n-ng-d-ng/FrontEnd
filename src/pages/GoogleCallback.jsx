@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import notify from '../../utils/notify';
+import notify from '../utils/notify';
 
 const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8081';
 axios.defaults.withCredentials = true;
@@ -34,5 +34,4 @@ export default function GoogleCallback() {
 
   return null;
 }
-
 
