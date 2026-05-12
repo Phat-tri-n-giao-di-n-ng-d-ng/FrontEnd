@@ -1,9 +1,13 @@
 import React, { useContext, useEffect } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-const ProtectedRoute = ({ children, requiredRoles = [], requireAuth = true }) => {
+const ProtectedRoute = ({
+  children,
+  requiredRoles = [],
+  requireAuth = true,
+}) => {
   const { t } = useTranslation();
   const { user, loading, getUserRole } = useContext(UserContext);
   const location = useLocation();
@@ -40,17 +44,21 @@ const ProtectedRoute = ({ children, requiredRoles = [], requireAuth = true }) =>
     const userRoleString = String(userRole || "").toLowerCase();
     console.log("🔍 Normalized user role:", userRoleString);
 
-    const hasRequiredRole = requiredRoles.some(role => {
+    const hasRequiredRole = requiredRoles.some((role) => {
       const requiredRoleString = String(role).toLowerCase();
       const match = userRoleString === requiredRoleString;
 
-      console.log(`Checking role '${requiredRoleString}': ${match ? '✅' : '❌'}`);
+      console.log(
+        `Checking role '${requiredRoleString}': ${match ? "✅" : "❌"}`,
+      );
       return match;
     });
 
     if (!hasRequiredRole) {
       console.log("❌ Access denied - user does not have required role");
-      console.log(`User has: ${userRoleString}, Required: ${requiredRoles.join(', ')}`);
+      console.log(
+        `User has: ${userRoleString}, Required: ${requiredRoles.join(", ")}`,
+      );
 
       // Redirect to 404 page when user doesn't have required role
       return <Navigate to="/404" replace />;

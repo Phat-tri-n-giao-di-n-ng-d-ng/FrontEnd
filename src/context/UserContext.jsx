@@ -1,6 +1,15 @@
 // Enhanced UserContext.js
-import React, { createContext, useState, useEffect, useMemo, useCallback } from "react";
-import { loginContext as realLogin, logoutContext as realLogout } from "../services/LoginServices";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  useMemo,
+  useCallback,
+} from "react";
+import {
+  loginContext as realLogin,
+  logoutContext as realLogout,
+} from "../services/LoginServices";
 import { getRoleFromToken, isTokenExpired } from "../utils/jwtUtils";
 
 const UserContext = createContext(null);
@@ -43,7 +52,7 @@ const UserProvider = ({ children }) => {
 
     // If not in user object, try to get from token
     if (!roleValue) {
-      const token = localStorage.getItem('authToken');
+      const token = localStorage.getItem("authToken");
       if (token) {
         roleValue = getRoleFromToken(token);
       }
@@ -60,7 +69,10 @@ const UserProvider = ({ children }) => {
 
   // Memoized role checks - only recalculate when role changes
   const isAdmin = useMemo(() => userRole === "admin", [userRole]);
-  const isCustomerService = useMemo(() => userRole === "customer_service", [userRole]);
+  const isCustomerService = useMemo(
+    () => userRole === "customer_service",
+    [userRole],
+  );
   const isCustomer = useMemo(() => userRole === "customer", [userRole]);
   const isGuest = useMemo(() => userRole === "guest", [userRole]);
 
@@ -69,17 +81,17 @@ const UserProvider = ({ children }) => {
     try {
       await realLogout();
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error("Logout error:", error);
     } finally {
       // Always clear user state and local storage
       setUser(null);
-      localStorage.removeItem('user');
-      localStorage.removeItem('authToken');
-      localStorage.removeItem('refreshToken');
+      localStorage.removeItem("user");
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("refreshToken");
       localStorage.removeItem("guestCart");
 
       // Redirect to login page for security (clear all state)
-      window.location.href = '/login';
+      window.location.href = "/login";
     }
   }, []);
 
@@ -93,7 +105,7 @@ const UserProvider = ({ children }) => {
 
         if (token) {
           // Special-case for OAuth2 flow using local marker token 'google'
-          if (token === 'google') {
+          if (token === "google") {
             if (savedUser) {
               const parsedUser = JSON.parse(savedUser);
               setUser(parsedUser);
@@ -143,30 +155,45 @@ const UserProvider = ({ children }) => {
   }, []);
 
   // Update user function
-  const updateUser = useCallback((updatedUserData) => {
-    const updatedUser = { ...user, ...updatedUserData };
-    setUser(updatedUser);
-    localStorage.setItem("user", JSON.stringify(updatedUser));
-  }, [user]);
+  const updateUser = useCallback(
+    (updatedUserData) => {
+      const updatedUser = { ...user, ...updatedUserData };
+      setUser(updatedUser);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+    },
+    [user],
+  );
 
   // Memoize context value to prevent unnecessary re-renders
-  const contextValue = useMemo(() => ({
-    user,
-    login,
-    logout,
-    loading,
-    getUserRole,
-    isAdmin,
-    isCustomerService,
-    isCustomer,
-    isGuest,
-    updateUser
-  }), [user, loading, login, logout, getUserRole, isAdmin, isCustomerService, isCustomer, isGuest, updateUser]);
+  const contextValue = useMemo(
+    () => ({
+      user,
+      login,
+      logout,
+      loading,
+      getUserRole,
+      isAdmin,
+      isCustomerService,
+      isCustomer,
+      isGuest,
+      updateUser,
+    }),
+    [
+      user,
+      loading,
+      login,
+      logout,
+      getUserRole,
+      isAdmin,
+      isCustomerService,
+      isCustomer,
+      isGuest,
+      updateUser,
+    ],
+  );
 
   return (
-    <UserContext.Provider value={contextValue}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
   );
 };
 
