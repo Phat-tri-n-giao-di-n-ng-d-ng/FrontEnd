@@ -13,6 +13,11 @@ import {
 import { getRoleFromToken, isTokenExpired } from "../utils/jwtUtils";
 
 const UserContext = createContext(null);
+const getStorableUser = (userData) => {
+  if (!userData || typeof userData !== "object") return userData;
+  const { phoneNumber, gender, ...safeUser } = userData;
+  return safeUser;
+};
 
 const UserProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
@@ -28,7 +33,7 @@ const UserProvider = ({ children }) => {
       const user = await realLogin(credentials);
 
       if (user) {
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("user", JSON.stringify(getStorableUser(user)));
         setUser(user);
         return user;
       } else {
@@ -127,7 +132,10 @@ const UserProvider = ({ children }) => {
             if (roleFromToken && parsedUser.role !== roleFromToken) {
               // Role mismatch, updating user role from token
               parsedUser.role = roleFromToken;
-              localStorage.setItem("user", JSON.stringify(parsedUser));
+              localStorage.setItem(
+                "user",
+                JSON.stringify(getStorableUser(parsedUser)),
+              );
             }
 
             setUser(parsedUser);
@@ -159,7 +167,7 @@ const UserProvider = ({ children }) => {
     (updatedUserData) => {
       const updatedUser = { ...user, ...updatedUserData };
       setUser(updatedUser);
-      localStorage.setItem("user", JSON.stringify(updatedUser));
+      localStorage.setItem("user", JSON.stringify(getStorableUser(updatedUser)));
     },
     [user],
   );
