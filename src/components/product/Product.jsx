@@ -57,6 +57,8 @@ export default function Product() {
     try {
       setLoading(true);
       const res = await getProductByIdWithDetails(id);
+
+      console.log ("res sfaasdf sdf sf s  " + res.DT[0])
       if (res && res.DT && res.DT.length > 0) {
         setProduct({ ...res.DT[0], quantity: 1 });
       } else {

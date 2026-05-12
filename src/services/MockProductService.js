@@ -16,6 +16,8 @@ export const getProductByIdWithDetails = async (id) => {
   try {
     // Try to get from real API first
     const apiProduct = await getProductByIdAPI(id);
+
+    console.log ("api product:", apiProduct);
     
     if (apiProduct) {
       // Transform API response to match expected format

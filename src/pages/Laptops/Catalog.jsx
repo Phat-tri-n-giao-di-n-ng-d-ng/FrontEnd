@@ -340,13 +340,16 @@ export default function Catalog() {
                 clipRule="evenodd"
               />
             </svg>
-            Back
+            {t('common.back')}
           </button>
         </div>
 
         <div className="px-2 py-1 flex justify-items-start text-[#A2A6B0]">
-          Items {indexOfFirstProduct + 1}-{indexOfLastProduct} of{" "}
-          {filteredProducts.length}
+          {t('common.items_range', {
+            start: indexOfFirstProduct + 1,
+            end: indexOfLastProduct,
+            total: filteredProducts.length
+          })}
         </div>
 
         <div className="col-span-2 flex justify-end">

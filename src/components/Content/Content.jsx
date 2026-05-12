@@ -18,7 +18,7 @@ import logo3 from "../../assets/images/logo/logo_razer.svg";
 import logo4 from "../../assets/images/logo/logo_thermaltake.svg";
 import logo5 from "../../assets/images/logo/logo_adata.svg";
 import logo6 from "../../assets/images/logo/logo_hp.svg";
-import logo7 from "../../assets/images/logo/logo_msi.svg";
+import logo7 from "../../assets/images/logo/logo_gigabytes.svg";
 import CardNews from "../info/CardNews";
 import TestimonialSlider from "../info/TestimonialSlider";
 import HeroSearchSection from "../HeroSearchSection";
@@ -205,6 +205,7 @@ function Content() {
 
       {/* Banner */}
       <Slideshow /> {/* Assuming you have a Slideshow component */}
+      {/* Minigame CTA - Simple Design */}
 
       {/* New product */}
       <div className="py-6 max-w-screen-xl mx-auto">
@@ -371,74 +372,80 @@ function Content() {
         </div>
       </div>
       {/* Logo group */}
-
+      <div className="w-full max-w-screen-xl mx-auto mt-4 rounded-md overflow-hidden">
+        <div className="flex gap-4 max-w-screen-xl mx-auto py-6">
+          <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <img src={logo1} alt="" className="h-40 object-contain" />
+            <img src={logo2} alt="" className="h-40 object-contain" />
+            <img src={logo3} alt="" className="h-40 object-contain" />
+            <img src={logo4} alt="" className="h-40 object-contain" />
+            <img src={logo5} alt="" className="h-40 object-contain" />
+            <img src={logo6} alt="" className="h-40 object-contain" />
+            <img src={logo7} alt="" className="h-40 object-contain" />
+          </div>
+        </div>
+      </div>
       {/* Follow us on Instagram for News, Offers & More */}
       <div className="w-full max-w-screen-xl mx-auto mt-4 rounded-md overflow-hidden">
         <h2 className="text-xl font-bold mb-4">
-          Latest Tech News in Computer Hardware
+          {t('news.sectionTitle')}
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-2">
           {[
             {
-              title: "NVIDIA Unveils RTX 5090",
-              excerpt:
-                "The next-gen GPU promises unmatched performance for gaming...",
+              title: t('news.cards.1.title'),
+              excerpt: t('news.cards.1.excerpt'),
               date: "2025-04-20",
               imageUrl:
-                "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=400&h=250&fit=crop", // GPU placeholder from Unsplash
+                "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=400&h=250&fit=crop",
               url: "https://www.anandtech.com/show/21369/nvidia-geforce-rtx-5090",
             },
             {
-              title: "AMD Ryzen 9 9950X Review",
-              excerpt:
-                "A powerhouse CPU for gamers and creators with 16 cores...",
+              title: t('news.cards.2.title'),
+              excerpt: t('news.cards.2.excerpt'),
               date: "2025-04-15",
               imageUrl:
-                "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400&h=250&fit=crop", // CPU/Motherboard placeholder
+                "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400&h=250&fit=crop",
               url: "https://www.tomshardware.com/reviews/amd-ryzen-9-9950x",
             },
             {
-              title: "DDR6 Memory Standards Announced",
-              excerpt:
-                "Next-gen RAM set to boost PC performance with higher bandwidth...",
+              title: t('news.cards.3.title'),
+              excerpt: t('news.cards.3.excerpt'),
               date: "2025-04-10",
               imageUrl:
-                "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=250&fit=crop", // RAM/Memory placeholder
+                "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400&h=250&fit=crop",
               url: "https://www.techradar.com/news/ddr6-memory",
             },
             {
-              title: "Intel Arc B580 GPU Launched",
-              excerpt:
-                "Affordable graphics for budget gamers with ray tracing support...",
+              title: t('news.cards.4.title'),
+              excerpt: t('news.cards.4.excerpt'),
               date: "2025-04-05",
               imageUrl:
-                "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=400&h=250&fit=crop", // GPU placeholder
+                "https://images.unsplash.com/photo-1591488320449-011701bb6704?w=400&h=250&fit=crop",
               url: "https://www.anandtech.com/show/21370/intel-arc-b580",
             },
             {
-              title: "New PCIe 6.0 SSDs Hit the Market",
-              excerpt:
-                "Blazing-fast storage for enthusiasts with unprecedented speeds...",
+              title: t('news.cards.5.title'),
+              excerpt: t('news.cards.5.excerpt'),
               date: "2025-04-01",
               imageUrl:
-                "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=400&h=250&fit=crop", // SSD/Storage placeholder
+                "https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=400&h=250&fit=crop",
               url: "https://www.tomshardware.com/news/pcie-6-ssd",
             },
             {
-              title: "ASUS ROG Z790 Motherboard Review",
-              excerpt:
-                "Top-tier features for high-end builds with Wi-Fi 7 support...",
+              title: t('news.cards.6.title'),
+              excerpt: t('news.cards.6.excerpt'),
               date: "2025-03-28",
               imageUrl:
-                "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400&h=250&fit=crop", // Motherboard placeholder
+                "https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400&h=250&fit=crop",
               url: "https://www.techradar.com/reviews/asus-rog-z790",
             },
             {
-              title: "Liquid Cooling Trends in 2025",
-              excerpt: "AIO coolers dominate the market with sleek designs...",
+              title: t('news.cards.7.title'),
+              excerpt: t('news.cards.7.excerpt'),
               date: "2025-03-25",
               imageUrl:
-                "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=250&fit=crop", // Cooling/PC build placeholder
+                "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=250&fit=crop",
               url: "https://www.anandtech.com/show/21371/liquid-cooling-2025",
             },
           ].map((article, index) => (

@@ -9,7 +9,7 @@ const SidebarFilters = ({ products = [], allProducts, onApplyFilters }) => {
   console.log("🔄 SidebarFilters rendered with:", {
     productsCount: products.length,
     allProductsCount: allProducts?.length,
-    sampleProduct: products[0]
+    sampleProduct: products
   });
 
   const [selectedPriceRange, setSelectedPriceRange] = useState("");
