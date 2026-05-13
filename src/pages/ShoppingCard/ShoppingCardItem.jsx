@@ -690,7 +690,7 @@ const ShoppingCardItem = () => {
         // Tạo form để POST đến VNPAY demo
         const form = document.createElement("form");
         form.method = "POST";
-        form.action = "http://localhost:8889/demo/create_payment_url";
+        form.action = "http://localhost:8888/order/create_payment_url";
 
         // Thêm các field cần thiết
         const authToken = localStorage.getItem("authToken") || "";
