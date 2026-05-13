@@ -1,10 +1,16 @@
 import axios from "axios";
 import { isTokenExpired } from "../utils/jwtUtils";
 
-// Cấu hình axios: dùng proxy của Vite để tránh CORS
+// Cấu hình axios: dùng env variable để tự động chọn URL đúng theo môi trường
+// Dev: VITE_API_BASE_URL=http://localhost:8081/api (.env.development)
+// Prod: VITE_API_BASE_URL=https://backend-efkm.onrender.com/api (.env.production)
 const axiosInstance = axios.create({
-  baseURL: "/api",
+  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
 });
+
+console.log("🚀 ~ baseURL:", import.meta.env.VITE_API_BASE_URL)
+
+
 
 // Flag to prevent multiple refresh token requests
 let isRefreshing = false;
@@ -25,7 +31,7 @@ const processQueue = (error, token = null) => {
 // Helper function to refresh token
 const refreshAccessToken = async () => {
   const refreshToken = localStorage.getItem('refreshToken');
-  
+
   if (!refreshToken) {
     throw new Error('No refresh token available');
   }
@@ -39,7 +45,7 @@ const refreshAccessToken = async () => {
     const plainAxios = axios.create({
       baseURL: "/api",
     });
-    
+
     // Call refresh token API
     const response = await plainAxios.post('/auth/refresh', {
       refreshToken: refreshToken
@@ -92,7 +98,7 @@ axiosInstance.interceptors.request.use(
 
         // Try to refresh token
         isRefreshing = true;
-        
+
         try {
           const newAccessToken = await refreshAccessToken();
           isRefreshing = false;
@@ -108,7 +114,7 @@ axiosInstance.interceptors.request.use(
           localStorage.removeItem('refreshToken');
           localStorage.removeItem('user');
           localStorage.removeItem("guestCart");
-          
+
           // Only redirect if not already on login page
           if (!window.location.pathname.includes('/login')) {
             window.location.href = '/login';
@@ -131,9 +137,6 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => {
     // Backend returns ApiResponse wrapper with structure: { code, message, result }
-    // We'll keep the full response but log it for debugging
-    console.log('Response interceptor - Status:', response.status);
-    console.log('Response interceptor - Data structure:', response.data);
     return response;
   },
   async (error) => {
@@ -173,22 +176,22 @@ axiosInstance.interceptors.response.use(
       if (!isAuthEndpoint && !error.config._retry) {
         // Try to refresh token first
         const refreshToken = localStorage.getItem('refreshToken');
-        
+
         if (refreshToken && !isTokenExpired(refreshToken) && !isRefreshing) {
           error.config._retry = true;
           isRefreshing = true;
-          
+
           try {
             const newAccessToken = await refreshAccessToken();
             isRefreshing = false;
-            
+
             // Retry the original request with new token
             error.config.headers.Authorization = `Bearer ${newAccessToken}`;
             return axiosInstance(error.config);
           } catch (refreshError) {
             isRefreshing = false;
             console.log('❌ Token refresh failed in response interceptor');
-            
+
             // Clear auth data
             localStorage.removeItem('authToken');
             localStorage.removeItem('refreshToken');
@@ -205,7 +208,7 @@ axiosInstance.interceptors.response.use(
         } else {
           // No valid refresh token, redirect to login
           console.log('Authentication required - redirecting to login...');
-          
+
           // Clear any existing auth data
           localStorage.removeItem('authToken');
           localStorage.removeItem('refreshToken');

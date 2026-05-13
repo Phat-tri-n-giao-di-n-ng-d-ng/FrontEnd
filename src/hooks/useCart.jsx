@@ -189,11 +189,13 @@ export const useCart = (userId) => {
   }, [cartItems]);
 
   // Load cart items when userId changes
+  // NOTE: loadCartItems is intentionally excluded from deps to avoid infinite loop.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (userId) {
       loadCartItems();
     }
-  }, [userId, loadCartItems]);
+  }, [userId]);
 
   return {
     cartItems,

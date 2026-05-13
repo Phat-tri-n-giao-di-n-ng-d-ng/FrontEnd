@@ -80,8 +80,7 @@ function Content() {
         if (response.EC !== 1) {
           throw new Error("Failed to fetch products");
         }
-        setProducts(
-          response.DT.map((item) => {
+        const mappedProducts = response.DT.map((item) => {
 
             const stock = item.stock ?? item.quantity ?? item.inventory ?? 0;
             const categoryName = item.categoryName || item.category?.name || item.category;
@@ -107,9 +106,9 @@ function Content() {
               price,
               inStock: stock > 0,
             };
-          })
-        );
-        console.log("Fetched products:", products);
+          });
+        setProducts(mappedProducts);
+        console.log("Fetched products:", mappedProducts);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
